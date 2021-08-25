@@ -218,7 +218,12 @@ void main() {
 }
 
 void test2DArff(
-    {String? fileName, int? k, int? errors, int? minK, int? maxK, int? trials}) {
+    {String? fileName,
+    int? k,
+    int? errors,
+    int? minK,
+    int? maxK,
+    int? trials}) {
   test('$fileName with labels', () async {
     final ArffReader reader =
         ArffReader.fromFile(File('test/data/$fileName.arff'));
@@ -248,6 +253,31 @@ void test2DArff(
         expect(clusters.clusterPoints![i][j][2], equals(c));
       }
     }
+  });
+
+  test('best by real data', () async {
+    final KMeans kmeans = KMeans([
+      [
+        0.7843137254509803,
+        0.7333333332941177,
+        0.7607843136862745,
+        0.9999999999607843
+      ],
+      [
+        0.7803921568235294,
+        0.7176470587843137,
+        0.7215686274117646,
+        0.9999999999607843
+      ],
+      [
+        0.5725490195686275,
+        0.35686274505882354,
+        0.3294117646666667,
+        0.9999999999607843
+      ]
+    ]);
+    final Clusters? res = kmeans.bestFit();
+    res?.means.forEach((List<double> element) => print(element) );
   });
 
   test('$fileName without labels', () async {

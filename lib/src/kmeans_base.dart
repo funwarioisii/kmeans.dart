@@ -360,14 +360,14 @@ class KMeansInitializers {
       int pointIndex = 0;
       final double r = rng.nextDouble();
       double cum = 0.0;
-      while (true) {
+      while (pointIndex < ps.length) {
         cum += ps[pointIndex];
         if (cum > r) {
           break;
         }
         pointIndex++;
       }
-      means[i] = points[pointIndex];
+      means[i] = points[pointIndex - 1];
     }
 
     return means;
@@ -549,7 +549,7 @@ class KMeans {
     int k = minK;
     int trial = 0;
 
-    while (k <= maxK && k <= _scaledPoints!.length) {
+    while (k <= maxK && k <= _scaledPoints!.length - 1) {
       final Clusters km = fit(
         k,
         maxIterations: maxIterations,
